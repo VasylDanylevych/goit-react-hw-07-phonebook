@@ -1,12 +1,27 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { List } from './ContactList.style';
 import PropTypes from 'prop-types';
-import { deleteContact } from 'redux/contactsCounterSlice';
+import { deleteContactThunk, fetchContactsThunk } from 'redux/thunk';
+import ContactsApi from 'services/contactsApi';
+import { useEffect } from 'react';
+
+const contactsApi = new ContactsApi();
 
 export const ContactList = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(state => state.contacts.items);
   const filter = useSelector(state => state.filter);
+
+  useEffect(() => {
+    function fetch() {
+      try {
+        dispatch(fetchContactsThunk());
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetch();
+  }, []);
 
   const getFilteredContacts = (contacts, filter) => {
     const normalizedFilter = filter.toLowerCase();
@@ -23,7 +38,9 @@ export const ContactList = () => {
         return (
           <li key={id}>
             {name}: {number}{' '}
-            <button onClick={() => dispatch(deleteContact(id))}>Delete</button>
+            <button onClick={() => dispatch(deleteContactThunk(id))}>
+              Delete
+            </button>
           </li>
         );
       })}

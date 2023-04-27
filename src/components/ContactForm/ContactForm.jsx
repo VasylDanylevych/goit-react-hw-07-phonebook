@@ -2,14 +2,14 @@ import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import { Form, Input } from './ContactForm.style';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactsCounterSlice';
+import { addContactThunk } from 'redux/thunk';
 
 export default function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(state => state.contacts.items);
   console.log('contacts: ', contacts);
 
   const handleSubmit = evt => {
@@ -22,7 +22,7 @@ export default function ContactForm() {
       setNumber('');
       return;
     }
-    dispatch(addContact(newContact));
+    dispatch(addContactThunk(newContact));
     setName('');
     setNumber('');
   };

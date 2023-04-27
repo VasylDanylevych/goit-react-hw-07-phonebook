@@ -3,16 +3,16 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { reducer } from './reducer';
 
-const persistConfig = {
-  key: 'contactsList',
-  storage: storage,
-  whitelist: ['contacts'],
-};
+// const persistConfig = {
+//   key: 'contactsList',
+//   storage: storage,
+//   whitelist: ['contacts'],
+// };
 
-const persistedReducer = persistReducer(persistConfig, reducer);
+// const persistedReducer = persistReducer(persistConfig, reducer);
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: reducer,
 });
 
 export const persistor = persistStore(store);
