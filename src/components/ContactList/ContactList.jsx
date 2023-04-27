@@ -2,10 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { List } from './ContactList.style';
 import PropTypes from 'prop-types';
 import { deleteContactThunk, fetchContactsThunk } from 'redux/thunk';
-import ContactsApi from 'services/contactsApi';
 import { useEffect } from 'react';
-
-const contactsApi = new ContactsApi();
 
 export const ContactList = () => {
   const dispatch = useDispatch();
@@ -21,7 +18,7 @@ export const ContactList = () => {
       }
     }
     fetch();
-  }, []);
+  }, [dispatch]);
 
   const getFilteredContacts = (contacts, filter) => {
     const normalizedFilter = filter.toLowerCase();

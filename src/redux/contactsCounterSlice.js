@@ -19,7 +19,7 @@ const handleFulfilledGet = (state, { payload }) => {
 };
 
 const handleFulfilledDelete = (state, { payload }) => {
-  state.items = state.items.filter(contact => contact.id !== payload);
+  state.items.filter(contact => contact.id !== payload);
 };
 
 const handleFulfilledAdd = (state, { payload }) => {
@@ -31,14 +31,6 @@ const handleRejected = (state, { payload }) => {
   state.error = payload;
 };
 
-// const addContacts = (state, action) => {
-//   return [...state, { ...action.payload }];
-// };
-
-// const deleteContacts = (state, action) => {
-//   return state.filter(contact => contact.id !== action.payload);
-// };
-
 export const contactsCounterSlice = createSlice({
   name: 'contacts',
   initialState: {
@@ -46,14 +38,7 @@ export const contactsCounterSlice = createSlice({
     isLoading: false,
     error: null,
   },
-  // reducers: {
-  //   addContact(state, action) {
-  //     return [...state, { ...action.payload }];
-  //   },
-  //   deleteContact(state, action) {
-  //     return state.filter(contact => contact.id !== action.payload);
-  //   },
-  // },
+
   extraReducers: builder => {
     builder
       .addCase(fetchContactsThunk.pending, handlePending)
