@@ -9,10 +9,10 @@ const handlePending = state => {
   state.isLoading = true;
 };
 
-const handleFulfilled = state => {
-  state.isLoading = false;
-  state.error = null;
-};
+// const handleFulfilled = state => {
+//   state.isLoading = false;
+//   state.error = null;
+// };
 
 const handleFulfilledGet = (state, { payload }) => {
   state.items = payload;
