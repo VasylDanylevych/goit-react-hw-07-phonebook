@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { List } from './ContactList.style';
 import PropTypes from 'prop-types';
-import { deleteContact } from 'redux/store';
+import { deleteContact } from 'redux/contactsCounterSlice';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
