@@ -6,42 +6,46 @@ import { useEffect } from 'react';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.items);
+  const { items, isLoading } = useSelector(state => state.contacts);
+  console.log('items: ', items);
   const filter = useSelector(state => state.filter);
 
   useEffect(() => {
     function fetch() {
-      try {
-        dispatch(fetchContactsThunk());
-      } catch (error) {
-        console.log(error);
-      }
+      dispatch(fetchContactsThunk());
     }
     fetch();
   }, [dispatch]);
 
-  const getFilteredContacts = (contacts, filter) => {
+  const getFilteredContacts = (items, filter) => {
     const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
+    return items.filter(item =>
+      item.name.toLowerCase().includes(normalizedFilter)
     );
   };
 
-  const filteredContact = getFilteredContacts(contacts, filter);
+  const filteredContact = getFilteredContacts(items, filter);
 
   return (
-    <List>
-      {filteredContact.map(({ id, name, number }) => {
-        return (
-          <li key={id}>
-            {name}: {number}{' '}
-            <button onClick={() => dispatch(deleteContactThunk(id))}>
-              Delete
-            </button>
-          </li>
-        );
-      })}
-    </List>
+    <>
+      {isLoading && (
+        <div>
+          <span>Loading...</span>
+        </div>
+      )}
+      <List>
+        {filteredContact.map(({ id, name, number }) => {
+          return (
+            <li key={id}>
+              {name}: {number}{' '}
+              <button onClick={() => dispatch(deleteContactThunk(id))}>
+                Delete
+              </button>
+            </li>
+          );
+        })}
+      </List>
+    </>
   );
 };
 

@@ -10,7 +10,6 @@ export default function ContactForm() {
 
   const dispatch = useDispatch();
   const contacts = useSelector(state => state.contacts.items);
-  console.log('contacts: ', contacts);
 
   const handleSubmit = evt => {
     evt.preventDefault();

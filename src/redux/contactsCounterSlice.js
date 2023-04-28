@@ -1,18 +1,28 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
   fetchContactsThunk,
   addContactThunk,
   deleteContactThunk,
 } from './thunk';
 
+const defaultStatus = {
+  pending: 'pending',
+  fulfilled: 'fulfilled',
+  rejected: 'rejected',
+};
+
+const customArr = [fetchContactsThunk, addContactThunk, deleteContactThunk];
+
+const fn = status => customArr.map(el => el[status]);
+
 const handlePending = state => {
   state.isLoading = true;
 };
 
-// const handleFulfilled = state => {
-//   state.isLoading = false;
-//   state.error = null;
-// };
+const handleFulfilled = state => {
+  state.isLoading = false;
+  state.error = null;
+};
 
 const handleFulfilledGet = (state, { payload }) => {
   state.items = payload;
@@ -41,17 +51,14 @@ export const contactsCounterSlice = createSlice({
 
   extraReducers: builder => {
     builder
-      .addCase(fetchContactsThunk.pending, handlePending)
       .addCase(fetchContactsThunk.fulfilled, handleFulfilledGet)
-      .addCase(fetchContactsThunk.rejected, handleRejected)
 
-      .addCase(addContactThunk.pending, handlePending)
       .addCase(addContactThunk.fulfilled, handleFulfilledAdd)
-      .addCase(addContactThunk.rejected, handleRejected)
 
-      .addCase(deleteContactThunk.pending, handlePending)
       .addCase(deleteContactThunk.fulfilled, handleFulfilledDelete)
-      .addCase(deleteContactThunk.rejected, handleRejected);
+      .addMatcher(isAnyOf(...fn(defaultStatus.fulfilled)), handleFulfilled)
+      .addMatcher(isAnyOf(...fn(defaultStatus.pending)), handlePending)
+      .addMatcher(isAnyOf(...fn(defaultStatus.rejected)), handleRejected);
   },
 });
 
