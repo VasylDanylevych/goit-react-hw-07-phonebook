@@ -29,7 +29,8 @@ const handleFulfilledGet = (state, { payload }) => {
 };
 
 const handleFulfilledDelete = (state, { payload }) => {
-  state.items = state.items.filter(item => item.id !== payload);
+  console.log('payload: ', payload);
+  state.items = state.items.filter(item => item.id !== payload.id);
 };
 
 const handleFulfilledAdd = (state, { payload }) => {
