@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { List } from './ContactList.style';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { deleteContactThunk, fetchContactsThunk } from 'redux/thunk';
 import { useEffect } from 'react';
 
@@ -11,10 +11,7 @@ export const ContactList = () => {
   const filter = useSelector(state => state.filter);
 
   useEffect(() => {
-    function fetch() {
-      dispatch(fetchContactsThunk());
-    }
-    fetch();
+    dispatch(fetchContactsThunk());
   }, [dispatch]);
 
   const getFilteredContacts = (items, filter) => {
@@ -49,13 +46,13 @@ export const ContactList = () => {
   );
 };
 
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.exact({
-      id: PropTypes.string,
-      name: PropTypes.string,
-      number: PropTypes.string,
-    })
-  ),
-  deleteContact: PropTypes.func,
-};
+// ContactList.propTypes = {
+//   contacts: PropTypes.arrayOf(
+//     PropTypes.exact({
+//       id: PropTypes.string,
+//       name: PropTypes.string,
+//       number: PropTypes.string,
+//     })
+//   ),
+//   deleteContact: PropTypes.func,
+// };

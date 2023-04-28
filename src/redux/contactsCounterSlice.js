@@ -29,7 +29,7 @@ const handleFulfilledGet = (state, { payload }) => {
 };
 
 const handleFulfilledDelete = (state, { payload }) => {
-  state.items.filter(contact => contact.id !== payload);
+  state.items = state.items.filter(item => item.id !== payload);
 };
 
 const handleFulfilledAdd = (state, { payload }) => {
@@ -52,14 +52,11 @@ export const contactsCounterSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchContactsThunk.fulfilled, handleFulfilledGet)
-
       .addCase(addContactThunk.fulfilled, handleFulfilledAdd)
-
       .addCase(deleteContactThunk.fulfilled, handleFulfilledDelete)
+
       .addMatcher(isAnyOf(...fn(defaultStatus.fulfilled)), handleFulfilled)
       .addMatcher(isAnyOf(...fn(defaultStatus.pending)), handlePending)
       .addMatcher(isAnyOf(...fn(defaultStatus.rejected)), handleRejected);
   },
 });
-
-export const { addContact, deleteContact } = contactsCounterSlice.actions;

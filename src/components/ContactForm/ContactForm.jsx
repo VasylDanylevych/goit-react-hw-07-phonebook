@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import { Form, Input } from './ContactForm.style';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,8 +12,7 @@ export default function ContactForm() {
 
   const handleSubmit = evt => {
     evt.preventDefault();
-    const id = nanoid();
-    const newContact = { id, name, number };
+    const newContact = { name, number };
     if (contacts.find(contact => contact.name === name)) {
       alert(`${name} is already in contacts.`);
       setName('');
